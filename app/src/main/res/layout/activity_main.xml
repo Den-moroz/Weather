@@ -34,7 +34,6 @@
                 android:id="@+id/current_weather_image"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@tools:sample/avatars"
                 app:srcCompat="@drawable/cloudy"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"/>
@@ -87,7 +86,6 @@
                         android:layout_width="34dp"
                         android:layout_height="34dp"
                         android:layout_gravity="center"
-                        android:src="@tools:sample/avatars"
                         app:srcCompat="@drawable/rain" />
 
                     <TextView
@@ -120,7 +118,6 @@
                         android:layout_width="34dp"
                         android:layout_height="34dp"
                         android:layout_gravity="center"
-                        android:src="@tools:sample/avatars"
                         app:srcCompat="@drawable/wind" />
 
                     <TextView
@@ -153,7 +150,6 @@
                         android:layout_width="34dp"
                         android:layout_height="34dp"
                         android:layout_gravity="center"
-                        android:src="@tools:sample/avatars"
                         app:srcCompat="@drawable/humidity" />
 
                     <TextView
