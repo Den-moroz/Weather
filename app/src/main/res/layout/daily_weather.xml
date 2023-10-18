@@ -20,8 +20,10 @@ xmlns:tools="http://schemas.android.com/tools">
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,10 +34,10 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:id="@+id/current_weather"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textAlignment="center"
-                android:layout_marginTop="80dp"
                 tools:text="Cloudy" />
 
             <ImageView
@@ -50,30 +52,30 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Monday Jun 23 | 12:12 PM"
-                android:textSize="19sp"
+                android:layout_marginTop="8dp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:layout_marginTop="8dp" />
+                android:textSize="19sp"
+                tools:text="Monday Jun 23 | 12:12 PM" />
 
             <TextView
                 android:id="@+id/temperature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="30"
-                android:textColor="@color/white"
                 android:textAlignment="center"
+                android:textColor="@color/white"
                 android:textSize="63sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="30" />
 
             <TextView
                 android:id="@+id/current_max_and_min_temperature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="H:30 L:5"
-                android:textColor="@color/white"
                 android:textAlignment="center"
-                android:textSize="16sp" />
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="H:30 L:5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,10 +102,10 @@ xmlns:tools="http://schemas.android.com/tools">
                         android:id="@+id/rain_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="80%"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="80%" />
 
                     <TextView
                         android:id="@+id/rain_title"
@@ -132,10 +134,10 @@ xmlns:tools="http://schemas.android.com/tools">
                         android:id="@+id/wind_speed_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="13 km/h"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="13 km/h" />
 
                     <TextView
                         android:id="@+id/wind_speed_title"
@@ -164,10 +166,10 @@ xmlns:tools="http://schemas.android.com/tools">
                         android:id="@+id/humidity_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="44%"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="44%" />
 
                     <TextView
                         android:id="@+id/humidity_title"
@@ -189,33 +191,33 @@ xmlns:tools="http://schemas.android.com/tools">
                     android:id="@+id/today_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="55dp"
                     android:layout_weight="1"
                     android:text="Today"
                     android:textColor="#DCA900"
-                    android:textStyle="bold"
                     android:textSize="20sp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="16dp"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/next_day_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="55dp"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/next_7_day"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:textSize="14sp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="16dp"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_weather_every_hour"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clipToPadding="false"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:clipToPadding="false" />
+                android:paddingEnd="16dp" />
 
         </LinearLayout>
     </ScrollView>
