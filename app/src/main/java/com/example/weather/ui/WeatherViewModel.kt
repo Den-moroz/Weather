@@ -12,8 +12,11 @@ import kotlinx.coroutines.launch
 const val TAG = "WeatherViewModel";
 
 class WeatherViewModel: ViewModel() {
-    private val _weatherData = MutableLiveData<WeatherResponse>()
-    val weatherData: LiveData<WeatherResponse> get() = _weatherData
+    private val _dailyWeatherData = MutableLiveData<WeatherResponse>()
+    val dailyWeatherData: LiveData<WeatherResponse> get() = _dailyWeatherData
+
+    private val _weeklyWeatherData = MutableLiveData<WeatherResponse>()
+    val weeklyWeatherData: LiveData<WeatherResponse> get() = _weeklyWeatherData
 
     private val weatherApi = WeatherApi.create()
 
@@ -21,10 +24,19 @@ class WeatherViewModel: ViewModel() {
     fun getDailyWeather() {
         viewModelScope.launch {
             try {
-                val response = weatherApi.getDailyWeather()
-                _weatherData.value = response
+                _dailyWeatherData.value = weatherApi.getDailyWeather()
             } catch (e: Exception) {
-                Log.e(TAG, "Something went wrong when trying to execute network request")
+                Log.e(TAG, "Something went wrong when trying to execute network request for daily weather")
+            }
+        }
+    }
+
+    fun getWeeklyWeatherData() {
+        viewModelScope.launch {
+            try {
+                _weeklyWeatherData.value = weatherApi.getWeeklyWeather()
+            } catch (e: Exception) {
+                Log.e(TAG, "Something went wrong when trying to execute network request for weekly weather")
             }
         }
     }
