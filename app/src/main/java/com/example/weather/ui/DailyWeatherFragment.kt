@@ -34,7 +34,7 @@ class DailyWeatherFragment : Fragment() {
 
         viewModel.getDailyWeather()
 
-        viewModel.weatherData.observe(viewLifecycleOwner, Observer { weatherResponse ->
+        viewModel.dailyWeatherData.observe(viewLifecycleOwner, Observer { weatherResponse ->
             weatherResponse?.let {
                 binding.currentWeather.text = it.days[0].conditions
                 val iconResource = when (it.days[0].icon) {

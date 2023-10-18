@@ -111,7 +111,7 @@ xmlns:tools="http://schemas.android.com/tools">
                         android:id="@+id/rain_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Rain"
+                        android:text="@string/rain"
                         android:textAlignment="center"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -143,7 +143,7 @@ xmlns:tools="http://schemas.android.com/tools">
                         android:id="@+id/wind_speed_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Wind speed"
+                        android:text="@string/wind_speed"
                         android:textAlignment="center"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -175,7 +175,7 @@ xmlns:tools="http://schemas.android.com/tools">
                         android:id="@+id/humidity_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Humidity"
+                        android:text="@string/humidity"
                         android:textAlignment="center"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -194,7 +194,7 @@ xmlns:tools="http://schemas.android.com/tools">
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="55dp"
                     android:layout_weight="1"
-                    android:text="Today"
+                    android:text="@string/today"
                     android:textColor="#DCA900"
                     android:textSize="20sp"
                     android:textStyle="bold" />
