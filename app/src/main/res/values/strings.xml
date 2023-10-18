@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="label_temperature">%s°C</string>
+    <string name="label_datetime">%1$s | %2$s</string>
+    <string name="label_temp_max_and_min">H:%s°C, L:%s°C</string>
+    <string name="label_rain">%s%%</string>
+    <string name="label_wind_speed">%s m/s</string>
+    <string name="label_humidity">%s%%</string>
+    <string name="next_7_day"><![CDATA[Next 7 Day >]]></string>
 </resources>
