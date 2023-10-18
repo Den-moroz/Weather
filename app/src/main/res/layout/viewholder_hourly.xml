@@ -3,6 +3,7 @@
     android:layout_width="90dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="8dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="3dp"
@@ -11,7 +12,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/background_current_weather">
 
         <TextView
             android:id="@+id/hour_time"
@@ -21,19 +23,20 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:layout_margin="8dp"
-            android:text="8pm" />
+            tools:text="8pm" />
 
         <ImageView
             android:id="@+id/hour_image"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:layout_gravity="center"
             app:srcCompat="@drawable/cloudy_sunny" />
 
         <TextView
             android:id="@+id/hour_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="20"
+            tools:text="20"
             android:textAlignment="center"
             android:layout_margin="8dp"
             android:textSize="18sp"
