@@ -11,12 +11,14 @@ data class WeatherDay(
     val temp: Double,
     val humidity: Double,
     val windspeed: Double,
-    val hours: List<WeatherHour>
+    val conditions: String,
+    val icon: String,
+    val hours: List<WeatherHour>,
+    val precipprob: Double
 )
 
 data class WeatherHour(
     val datetime: String,
     val temp: Double,
-    val humidity: Double,
-    val windspeed: Double
+    val icon: String
 )
