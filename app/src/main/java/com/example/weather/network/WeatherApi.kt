@@ -8,10 +8,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
 interface WeatherApi {
-    @GET("VisualCrossingWebServices/rest/services/timeline/london/today?unitGroup=metric&elements=datetime%2CdatetimeEpoch%2Ctempmax%2Ctempmin%2Ctemp%2Chumidity%2Cprecipprob%2Cwindspeed%2Cconditions%2Cicon&include=hours%2Cdays&key=FYMKZKFJVW7DAMXF5852SKWHC&contentType=json")
+    @GET("VisualCrossingWebServices/rest/services/timeline/dubai/today?unitGroup=metric&elements=datetime%2CdatetimeEpoch%2Ctempmax%2Ctempmin%2Ctemp%2Chumidity%2Cprecipprob%2Cwindspeed%2Cconditions%2Cicon&include=hours%2Cdays&key=FYMKZKFJVW7DAMXF5852SKWHC&contentType=json")
     suspend fun getDailyWeather(): WeatherResponse
 
-    @GET("VisualCrossingWebServices/rest/services/timeline/london/next7days?unitGroup=metric&elements=datetime%2CdatetimeEpoch%2Ctempmax%2Ctempmin%2Ctemp%2Chumidity%2Cprecipprob%2Cwindspeed%2Cconditions%2Cicon&include=days%2Chours&key=FYMKZKFJVW7DAMXF5852SKWHC&contentType=json")
+    @GET("VisualCrossingWebServices/rest/services/timeline/dubai/next7days?unitGroup=metric&elements=datetime%2CdatetimeEpoch%2Ctempmax%2Ctempmin%2Ctemp%2Chumidity%2Cprecipprob%2Cwindspeed%2Cconditions%2Cicon&include=days%2Chours&key=FYMKZKFJVW7DAMXF5852SKWHC&contentType=json")
     suspend fun getWeeklyWeather(): WeatherResponse
 
     companion object {

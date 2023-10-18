@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weather.R
 import com.example.weather.model.WeatherHour
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -41,7 +40,7 @@ class HourlyAdapter(private val items: List<WeatherHour>) : RecyclerView.Adapter
         val drawableResourceId = when (item.icon) {
             "partly-cloudy-day" -> R.drawable.cloudy_sunny
             "clear-day" -> R.drawable.sunny
-            "rain" -> R.drawable.rain
+            "rain" -> R.drawable.rainy
             "snow" -> R.drawable.snowy
             "cloudy" -> R.drawable.cloudy
             "storm" -> R.drawable.storm

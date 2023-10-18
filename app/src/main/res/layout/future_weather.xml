@@ -34,7 +34,7 @@
                     android:layout_margin="16dp">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/back_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/back"
@@ -91,7 +91,7 @@
                                 android:layout_marginBottom="8dp"
                                 android:textColor="@color/white"
                                 android:textSize="43sp"
-                                tools:text="38°" />
+                                tools:text="100°" />
 
                             <TextView
                                 android:id="@+id/tomorrow_condition"
@@ -131,13 +131,13 @@
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
-                                tools:text="80%" />
+                                tools:text="100%" />
 
                             <TextView
                                 android:id="@+id/rain_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Rain"
+                                android:text="@string/rain"
                                 android:textAlignment="center"
                                 android:textColor="@color/white" />
                         </LinearLayout>
@@ -163,7 +163,7 @@
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
-                                tools:text="13 km/h" />
+                                tools:text="100 km/h" />
 
                             <TextView
                                 android:id="@+id/wind_speed_title"
@@ -195,7 +195,7 @@
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
-                                tools:text="44%" />
+                                tools:text="100%" />
 
                             <TextView
                                 android:id="@+id/humidity_title"
@@ -212,8 +212,9 @@
                     android:id="@+id/recycler_weather_every_day"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:nestedScrollingEnabled="true"
-                    android:layout_weight="1" />
+                    android:layout_marginTop="18dp"
+                    android:layout_weight="1"
+                    android:nestedScrollingEnabled="true" />
 
             </LinearLayout>
         </ScrollView>

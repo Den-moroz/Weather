@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -40,7 +41,7 @@ class DailyWeatherFragment : Fragment() {
                 val iconResource = when (it.days[0].icon) {
                     "partly-cloudy-day" -> R.drawable.cloudy_sunny
                     "clear-day" -> R.drawable.sunny
-                    "rain" -> R.drawable.rain
+                    "rain" -> R.drawable.rainy
                     "snow" -> R.drawable.snowy
                     "cloudy" -> R.drawable.cloudy
                     "storm" -> R.drawable.storm
@@ -50,7 +51,7 @@ class DailyWeatherFragment : Fragment() {
                     .load(iconResource)
                     .into(binding.currentWeatherImage)
                 val currentDateTime = LocalDateTime.now();
-                val formattedDate = currentDateTime.format(DateTimeFormatter.ofPattern("EEEE MMMM d"));
+                val formattedDate = currentDateTime.format(DateTimeFormatter.ofPattern("EEE MMM d"));
                 val formattedTime = currentDateTime.format(DateTimeFormatter.ofPattern("h:mm a"));
                 binding.date.setText(getString(R.string.label_datetime, formattedDate, formattedTime));
                 binding.temperature.text = getString(R.string.label_temperature, it.days[0].temp.toString())
@@ -63,11 +64,16 @@ class DailyWeatherFragment : Fragment() {
                 binding.rainText.text = getString(R.string.label_rain, it.days[0].precipprob.toString())
                 binding.windSpeedText.text = getString(R.string.label_wind_speed, it.days[0].windspeed.toString())
 
+                binding.nextDayTitle.setOnClickListener {
+                    findNavController().navigate(R.id.action_dailyWeatherFragment_to_weeklyWeatherFragment)
+                }
+
                 recyclerView = binding.root.findViewById(R.id.recycler_weather_every_hour)
                 recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-                val hourlyDataFromCurrentHour = it.days[0].hours.subList(currentDateTime.hour, it.days[0].hours.size)
-                adapterHourly = HourlyAdapter(hourlyDataFromCurrentHour)
+                val hoursOfCurrentDay = it.days[0].hours.subList(currentDateTime.hour, it.days[0].hours.size)
+                val hoursOfNextDay = it.days[1].hours
+                adapterHourly = HourlyAdapter(hoursOfCurrentDay + hoursOfNextDay)
                 recyclerView.adapter = adapterHourly
             }
         })
