@@ -18,13 +18,20 @@ class WeatherViewModel: ViewModel() {
     private val _weeklyWeatherData = MutableLiveData<WeatherResponse>()
     val weeklyWeatherData: LiveData<WeatherResponse> get() = _weeklyWeatherData
 
+    private val _location = MutableLiveData("London")
+    val location: LiveData<String> get() = _location
+
     private val weatherApi = WeatherApi.create()
 
+    fun updateLocation(newLocation: String) {
+        _location.value = newLocation
+    }
 
     fun getDailyWeather() {
         viewModelScope.launch {
             try {
-                _dailyWeatherData.value = weatherApi.getDailyWeather()
+                val locationValue = location.value ?: "London"
+                _dailyWeatherData.value = weatherApi.getDailyWeather(locationValue)
             } catch (e: Exception) {
                 Log.e(TAG, "Something went wrong when trying to execute network request for daily weather")
             }
@@ -34,7 +41,8 @@ class WeatherViewModel: ViewModel() {
     fun getWeeklyWeatherData() {
         viewModelScope.launch {
             try {
-                _weeklyWeatherData.value = weatherApi.getWeeklyWeather()
+                val locationValue = location.value ?: "London"
+                _weeklyWeatherData.value = weatherApi.getWeeklyWeather(locationValue)
             } catch (e: Exception) {
                 Log.e(TAG, "Something went wrong when trying to execute network request for weekly weather")
             }
