@@ -55,6 +55,10 @@ class DailyWeatherFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        requestLocationPermission()
+
         viewModel.getDailyWeather()
 
         binding.changeLocation.setOnEditorActionListener { v, actionId, event ->
@@ -121,16 +125,6 @@ class DailyWeatherFragment : Fragment() {
             }
         })
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
-        requestLocationPermission()
-
-        viewModel.getDailyWeather()
     }
 
     private fun requestLocationPermission() {
