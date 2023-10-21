@@ -2,6 +2,7 @@ package com.example.weather.ui
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +25,7 @@ class WeatherViewModel: ViewModel() {
 
     val status: LiveData<WeatherApiStatus> = _status
 
-    private val _location = MutableLiveData("London")
+    private val _location = MutableLiveData<String>()
     val location: LiveData<String> get() = _location
 
     private val weatherApi = WeatherApi.create()
@@ -34,15 +35,20 @@ class WeatherViewModel: ViewModel() {
     }
 
     fun getDailyWeather() {
-        viewModelScope.launch {
-            _status.value = WeatherApiStatus.LOADING
-            try {
-                val locationValue = location.value ?: "London"
-                _dailyWeatherData.value = weatherApi.getDailyWeather(locationValue)
-                _status.value = WeatherApiStatus.DONE
-            } catch (e: Exception) {
-                _status.value = WeatherApiStatus.ERROR
-                Log.e(TAG, "Something went wrong when trying to execute network request for daily weather")
+        val locationValue = location.value
+        if (locationValue != null) {
+            viewModelScope.launch {
+                _status.value = WeatherApiStatus.LOADING
+                try {
+                    _dailyWeatherData.value = weatherApi.getDailyWeather(locationValue)
+                    _status.value = WeatherApiStatus.DONE
+                } catch (e: Exception) {
+                    _status.value = WeatherApiStatus.ERROR
+                    Log.e(
+                        TAG,
+                        "Something went wrong when trying to execute network request for daily weather"
+                    )
+                }
             }
         }
     }

@@ -84,7 +84,8 @@ class DailyWeatherFragment : Fragment() {
 
         viewModel.dailyWeatherData.observe(viewLifecycleOwner, Observer { weatherResponse ->
             weatherResponse?.let {
-                binding.location.text = it.timezone
+                val refactoredTimezone = it.timezone.replace("/", " | ").replace("_", " ")
+                binding.location.text = refactoredTimezone
                 val iconResource = when (it.days[0].icon) {
                     "partly-cloudy-day" -> R.drawable.cloudy_sunny
                     "clear-day" -> R.drawable.sunny
@@ -144,8 +145,8 @@ class DailyWeatherFragment : Fragment() {
                 location?.let {
                     val userLocation = "${it.latitude},${it.longitude}"
                     viewModel.updateLocation(userLocation)
-                } ?: run {
-                    viewModel.updateLocation("London")
+
+                    viewModel.getDailyWeather()
                 }
             }
             .addOnFailureListener { e ->

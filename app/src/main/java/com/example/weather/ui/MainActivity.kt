@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.bumptech.glide.Glide
 import com.example.weather.R
 
 class MainActivity : AppCompatActivity() {
@@ -16,5 +17,11 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Glide.get(applicationContext).clearDiskCache()
+        Glide.get(applicationContext).clearMemory()
     }
 }
