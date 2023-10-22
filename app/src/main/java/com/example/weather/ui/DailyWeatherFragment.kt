@@ -104,10 +104,10 @@ class DailyWeatherFragment : Fragment() {
 
         updateClock = object : Runnable {
             override fun run() {
-                val currentTime = System.currentTimeMillis()
-                val dateFormat = SimpleDateFormat("EEE MMM d, h:mm a", Locale.getDefault())
-                val formattedDate = dateFormat.format(currentTime)
-                binding.date.text = formattedDate
+                val currentDateTime = LocalDateTime.now();
+                val formattedDate = currentDateTime.format(DateTimeFormatter.ofPattern("EEE MMM d"));
+                val formattedTime = currentDateTime.format(DateTimeFormatter.ofPattern("h:mm a"));
+                binding.date.setText(getString(R.string.label_datetime, formattedDate, formattedTime));
                 handler.postDelayed(this, delay)
             }
         }
@@ -130,10 +130,6 @@ class DailyWeatherFragment : Fragment() {
                 Glide.with(requireContext())
                     .load(iconResource)
                     .into(binding.currentWeatherImage)
-                val currentDateTime = LocalDateTime.now();
-                val formattedDate = currentDateTime.format(DateTimeFormatter.ofPattern("EEE MMM d"));
-                val formattedTime = currentDateTime.format(DateTimeFormatter.ofPattern("h:mm a"));
-                binding.date.setText(getString(R.string.label_datetime, formattedDate, formattedTime));
                 binding.temperature.text = getString(R.string.label_temperature, it.days[0].temp.toString())
                 binding.currentMaxAndMinTemperature.text = getString(
                     R.string.label_temp_max_and_min,
@@ -155,7 +151,7 @@ class DailyWeatherFragment : Fragment() {
                 recyclerView = binding.root.findViewById(R.id.recycler_weather_every_hour)
                 recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-                val hoursOfCurrentDay = it.days[0].hours.subList(currentDateTime.hour, it.days[0].hours.size)
+                val hoursOfCurrentDay = it.days[0].hours.subList(LocalDateTime.now().hour, it.days[0].hours.size)
                 val hoursOfNextDay = it.days[1].hours
                 adapterHourly = HourlyAdapter((hoursOfCurrentDay + hoursOfNextDay).subList(0, 24))
                 recyclerView.adapter = adapterHourly
