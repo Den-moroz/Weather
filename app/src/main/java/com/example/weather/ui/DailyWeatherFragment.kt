@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,8 +35,10 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class DailyWeatherFragment : Fragment() {
 
@@ -58,6 +62,10 @@ class DailyWeatherFragment : Fragment() {
             Toast.makeText(requireContext(), R.string.toast_location_permission_required, Toast.LENGTH_SHORT).show()
         }
     }
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val delay: Long = 1000
+    private lateinit var updateClock: Runnable
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,6 +101,18 @@ class DailyWeatherFragment : Fragment() {
                 false
             }
         }
+
+        updateClock = object : Runnable {
+            override fun run() {
+                val currentTime = System.currentTimeMillis()
+                val dateFormat = SimpleDateFormat("EEE MMM d, h:mm a", Locale.getDefault())
+                val formattedDate = dateFormat.format(currentTime)
+                binding.date.text = formattedDate
+                handler.postDelayed(this, delay)
+            }
+        }
+
+        handler.postDelayed(updateClock, delay)
 
         viewModel.dailyWeatherData.observe(viewLifecycleOwner, Observer { weatherResponse ->
             weatherResponse?.let {
@@ -156,6 +176,11 @@ class DailyWeatherFragment : Fragment() {
                 requestLocationPermission()
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacks(updateClock)
     }
 
     private fun requestLocationPermission() {
