@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="hint">#E0E0E0</color>
+    <color name="semi_transparent_background">#80000000</color>
+    <color name="second_background">#331866</color>
 </resources>

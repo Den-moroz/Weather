@@ -60,7 +60,16 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
+    implementation("androidx.room:room-runtime:2.6.0")
+    kapt("androidx.room:room-compiler:2.6.0")
+    implementation("androidx.room:room-ktx:2.6.0")
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+
     implementation("androidx.viewpager:viewpager:1.1.0-alpha01")
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")

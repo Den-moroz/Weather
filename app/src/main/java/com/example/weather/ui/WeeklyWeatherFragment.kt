@@ -13,10 +13,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weather.R
 import com.example.weather.adapter.FutureAdapter
+import com.example.weather.data.DataStoreManager
 import com.example.weather.databinding.FutureWeatherBinding
+import com.example.weather.service.WeatherApplication
+import com.example.weather.service.WeatherViewModel
+import com.example.weather.service.WeatherViewModelFactory
 
 class WeeklyWeatherFragment : Fragment() {
-    private val viewModel: WeatherViewModel by activityViewModels()
+    private val viewModel: WeatherViewModel by activityViewModels {
+        WeatherViewModelFactory(
+            (activity?.application as WeatherApplication).database.locationDao(), DataStoreManager(requireContext())
+        )
+    }
 
     private lateinit var adapterFuture: RecyclerView.Adapter<FutureAdapter.ViewHolder>
     private lateinit var recyclerView: RecyclerView
@@ -25,7 +33,7 @@ class WeeklyWeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FutureWeatherBinding.inflate(inflater)
+        val binding = FutureWeatherBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 

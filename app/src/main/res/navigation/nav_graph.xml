@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_dailyWeatherFragment_to_weeklyWeatherFragment"
             app:destination="@id/weeklyWeatherFragment" />
+        <action
+            android:id="@+id/action_dailyWeatherFragment_to_locationsFragment"
+            app:destination="@id/locationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/weeklyWeatherFragment"
@@ -18,6 +21,14 @@
         android:label="WeeklyWeatherFragment" >
         <action
             android:id="@+id/action_weeklyWeatherFragment_to_dailyWeatherFragment"
+            app:destination="@id/dailyWeatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationsFragment"
+        android:name="com.example.weather.ui.LocationsFragment"
+        android:label="LocationsFragment" >
+        <action
+            android:id="@+id/action_locationsFragment_to_dailyWeatherFragment"
             app:destination="@id/dailyWeatherFragment" />
     </fragment>
 </navigation>

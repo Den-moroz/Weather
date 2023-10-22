@@ -1,14 +1,12 @@
-package com.example.weather.ui
+package com.example.weather.service
 
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
+import com.example.weather.service.WeatherApiStatus
 
 class BindingAdapters {
 }
