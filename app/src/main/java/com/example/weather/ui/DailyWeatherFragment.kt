@@ -31,7 +31,6 @@ import com.example.weather.service.WeatherViewModel
 import com.example.weather.service.WeatherViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.time.LocalDateTime
