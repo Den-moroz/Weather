@@ -6,7 +6,7 @@ xmlns:tools="http://schemas.android.com/tools">
 <data>
     <variable
         name="viewModel"
-        type="com.example.weather.ui.WeatherViewModel" />
+        type="com.example.weather.service.WeatherViewModel" />
 </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,15 +83,15 @@ xmlns:tools="http://schemas.android.com/tools">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="72dp">
 
                     <EditText
                         android:id="@+id/change_location"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
-                        android:layout_marginLeft="80dp"
+                        android:layout_marginLeft="50dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginRight="80dp"
+                        android:layout_marginRight="110dp"
                         android:background="@drawable/background_current_weather"
                         android:drawableStart="@mipmap/search_foreground"
                         android:drawablePadding="0dp"
@@ -106,6 +106,17 @@ xmlns:tools="http://schemas.android.com/tools">
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <ImageView
+                        android:id="@+id/saved_location_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/saved_location"
+                        android:layout_marginRight="35dp"
+                        android:layout_marginTop="9dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -116,7 +127,7 @@ xmlns:tools="http://schemas.android.com/tools">
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    tools:text="Cloudy" />
+                    tools:text="location" />
 
                 <ImageView
                     android:id="@+id/current_weather_image"

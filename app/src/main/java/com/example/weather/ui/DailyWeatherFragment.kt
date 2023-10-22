@@ -17,21 +17,35 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weather.R
 import com.example.weather.adapter.HourlyAdapter
+import com.example.weather.data.DataStoreManager
 import com.example.weather.databinding.DailyWeatherBinding
+import com.example.weather.service.WeatherApplication
+import com.example.weather.service.WeatherViewModel
+import com.example.weather.service.WeatherViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.flow.forEach
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class DailyWeatherFragment : Fragment() {
 
-    private val viewModel: WeatherViewModel by activityViewModels()
+    private val viewModel: WeatherViewModel by activityViewModels {
+        WeatherViewModelFactory(
+            (activity?.application as WeatherApplication).database.locationDao(), DataStoreManager(requireContext())
+        )
+    }
+
+    private lateinit var dataStoreManager: DataStoreManager
 
     private lateinit var adapterHourly: RecyclerView.Adapter<HourlyAdapter.ViewHolder>
     private lateinit var recyclerView: RecyclerView
@@ -50,16 +64,16 @@ class DailyWeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DailyWeatherBinding.inflate(inflater)
+        val binding = DailyWeatherBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        viewModel.location.observe(viewLifecycleOwner, Observer {
+            viewModel.getDailyWeather()
+        })
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
-        requestLocationPermission()
-
-        viewModel.getDailyWeather()
 
         binding.changeLocation.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -68,7 +82,6 @@ class DailyWeatherFragment : Fragment() {
                 imm.hideSoftInputFromWindow(v.windowToken, 0)
 
                 viewModel.updateLocation(binding.changeLocation.text.toString())
-                viewModel.getDailyWeather()
 
                 binding.changeLocation.text = null
                 binding.changeLocation.isEnabled = false
@@ -116,6 +129,10 @@ class DailyWeatherFragment : Fragment() {
                     findNavController().navigate(R.id.action_dailyWeatherFragment_to_weeklyWeatherFragment)
                 }
 
+                binding.savedLocationImage.setOnClickListener {
+                    findNavController().navigate(R.id.action_dailyWeatherFragment_to_locationsFragment)
+                }
+
                 recyclerView = binding.root.findViewById(R.id.recycler_weather_every_hour)
                 recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
@@ -126,6 +143,20 @@ class DailyWeatherFragment : Fragment() {
             }
         })
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        dataStoreManager = DataStoreManager(requireContext())
+
+        dataStoreManager.locationFlow.onEach { savedLocation ->
+            if (savedLocation.isNotBlank()) {
+                viewModel.updateLocation(savedLocation)
+            } else {
+                requestLocationPermission()
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun requestLocationPermission() {
@@ -146,6 +177,7 @@ class DailyWeatherFragment : Fragment() {
                     val userLocation = "${it.latitude},${it.longitude}"
                     viewModel.updateLocation(userLocation)
 
+                    viewModel.insertLocation(com.example.weather.data.Location(locationName = userLocation))
                     viewModel.getDailyWeather()
                 }
             }
