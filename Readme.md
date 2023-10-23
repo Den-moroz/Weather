@@ -1,19 +1,22 @@
-<div align="center"> <h1 > <img src=logo.jpg width="600" align="center" alt="50"/></h1></div>
-<div align="center"> <h1> Weather App </h1> </div>
+<div align="center">
+  <img src="logo.webp" width="100" alt="Icon"/>
+  <h1>Weather App</h1>
+</div>
 
-### Welcome to our Weather App!
+### Welcome to Weather App!
 
-#### Our Weather App for Android provides accurate weather forecasts, allowing you to plan your activities with confidence. Whether you need to know the current temperature, upcoming weather, or extended forecasts, our app has you covered.
+#### Weather App for Android provides accurate weather forecasts, allowing you to plan your activities with confidence. Whether you need to know the current temperature, upcoming weather, or extended forecasts, this app has you covered.
 
-#### In this README, you'll find detailed information about our app, its features, and how to get started with weather forecasting. Stay ahead of the weather with our intuitive and user-friendly Weather App!
+#### In this README, you'll find detailed information about the app, its features, and how to get started with weather forecasting. Stay ahead of the weather with intuitive and user-friendly Weather App!
 #### Let's get started!
 
 ---
 ## Content
 - [👨‍💻Project Overview](#Overview)
+- [Technologies used](#Technologies used)
 - [🌟Features](#features)
-- [‍📝Controllers](#controllers)
 - [🛠️Installation](#installation)
+- [📱Screenshots](#screenshots)
 - [⚙️Usage](#usage)
 - [🎯Conclusion](#conclusion)
 
@@ -30,7 +33,6 @@ ___
 - **Kotlin:** The app is developed using Kotlin, a modern programming language for Android.
 - **Retrofit:** Retrofit is used for making network requests and handling API responses.
 - **Moshi:** Moshi is used for JSON parsing and serialization.
-- **Coil:** Coil is used for efficient image loading and caching.
 - **Glide:** Glide is used for image loading and caching in the app.
 ___
 - **Room:** Room Persistence Library is used for local database storage and data access.
@@ -44,32 +46,21 @@ ___
 - **ItemTouchHelper:** ItemTouchHelper is used for swipe-to-delete functionality in location management.
 - **FusedLocationProviderClient:** FusedLocationProviderClient is used for accessing device location.
 ___
-### App Features
-___
 
-- **Current Weather:** View current weather conditions, including temperature, humidity, and wind speed.
-- **Hourly Forecast:** Get hourly weather forecasts to plan your day effectively.
-- **Extended Forecast:** Access extended weather forecasts for the upcoming days.
-- **Location Management:** Add, delete, and manage multiple locations for weather updates.
-- **Intuitive UI:** User-friendly interface for easy navigation and quick weather updates.
-- **Offline Support:** View cached weather data even when offline for seamless user experience.
-___
-- **Dark Mode:** Support for dark mode, ensuring comfortable usage in low-light environments.
-- **Localization:** Localized content and language support for a global user base.
-- **Responsive Design:** Responsive layout for optimal user experience across various devices.
-- **Location Permissions:** Request location permissions for accurate weather data based on user location.
-- **Search Functionality:** Search for specific locations to get detailed weather information.
-- **Image Loading:** Efficient image loading for weather icons and visuals using Glide and Coil libraries.
-___
-### Who can use this app?
-___
+<hr>
+<div id="screenshots" align="center">
+  <h2>📱 Screenshots</h2>
+</div>
+<hr>
 
-* **_GENERAL USERS_** - Anyone looking for accurate weather forecasts, hourly updates, and extended forecasts for planning daily activities.
-* **_TRAVELERS_** - Travelers can use this app to check weather conditions for their destination and plan their trips accordingly.
-* **_OUTDOOR ENTHUSIASTS_** - Outdoor enthusiasts such as hikers, bikers, and campers can use this app to stay informed about weather conditions in specific locations.
-* **_EVENT PLANNERS_** - Event planners can check weather forecasts to ensure weather-appropriate arrangements for outdoor events.
-* **_ANDROID DEVELOPERS_** - Android developers can explore the codebase to understand the implementation of various features and libraries.
-___
+<div align="center">
+  <img src="main_screen.png" alt="Screenshot 1" width="250"/>
+  <img src="future_weather.png" alt="Screenshot 2" width="250"/>
+  <img src="screenshot3.png" alt="Screenshot 3" width="250"/>
+</div>
+
+---
+
 <div id="features" align="center">
   <h2 >🌟 Features</h2>
 </div>
@@ -102,37 +93,17 @@ ___
 - User-friendly interface for effortless navigation and quick weather updates.
 - Clear visuals and easy-to-understand weather information.
 
-### 6. Offline Support:
-
-- View cached weather data even when offline.
-- Ensure uninterrupted access to weather information regardless of internet connectivity.
-
-### 7. Dark Mode:
-
-- Support for dark mode for comfortable usage in low-light environments.
-- Switch between light and dark modes based on your preference.
-
-### 8. Localization:
-
-- Localized content and language support for global users.
-- Access weather information in your preferred language for a personalized experience.
-
-### 9. Responsive Design:
-
-- Responsive layout for optimal user experience across various Android devices.
-- Consistent design and functionality on phones and tablets.
-
-### 10. Location Permissions:
+### 6. Location Permissions:
 
 - Request location permissions to provide accurate weather data based on your current location.
 - Grant permission for location-based weather updates and forecasts.
 
-### 11. Search Functionality:
+### 7. Search Functionality:
 
 - Search for specific locations to get detailed weather information.
 - Enter city names or regions to access weather forecasts for any location.
 
-### 12. Image Loading:
+### 8. Image Loading:
 
 - Efficient image loading for weather icons and visuals.
 - Smooth loading and caching of weather icons using Glide and Coil libraries.
@@ -166,16 +137,12 @@ ___
 
 ### 🎯 Conclusion
 
-Thank you for choosing our Weather App for your weather forecasting needs. We are dedicated to providing accurate and reliable weather information to help you plan your activities effectively. If you have any feedback, suggestions, or issues, please feel free to contact our support team.
+Thank you for using Weather App!
 
-Stay ahead of the weather with our Weather App. Enjoy your experience!
+I hope this app provides you with accurate weather information to plan your day effectively. If you have any feedback or suggestions, feel free to reach out. Enjoy exploring the weather with Weather App!
 
 <div align="center">
   <h2>Happy Forecasting! ☀️☔️</h2>
 </div>
 
 ---
-
-<div align="center">
-  <p>⚡ Made with ❤️ by the Weather App Team ⚡</p>
-</div>
