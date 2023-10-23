@@ -1,4 +1,4 @@
-<div align="center"> <h1 > <img src=logo.webp width="600" align="center"/></h1></div>
+<div align="center"> <h1 > <img src=logo.webp width="300" align="center"/></h1></div>
 <div align="center"> <h1> Weather App </h1> </div>
 
 ### 🌦️ Welcome to Weather App! 🌦️
