@@ -27,6 +27,8 @@
 <hr>
 
 ### Technologies used
+<a name="technologies_used"></a>
+
 ___
 
 - **AndroidX:** The project utilizes AndroidX libraries and components for modern Android development.
@@ -153,6 +155,7 @@ Ensure you have appropriate API keys for weather data services if required by th
 ---
 
 ### 🎯 Conclusion
+<a name="conclusion"></a>
 
 Thank you for using Weather App!
 
