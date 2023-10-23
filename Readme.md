@@ -1,9 +1,9 @@
-<div align="center">
-  <img src="logo.webp" width="100" alt="Icon"/>
-  <h1>Weather App</h1>
+<div style="display: flex; align-items: center; justify-content: center;">
+  <img src="logo.webp" width="400" alt="Icon"/>
+  <h1 style="margin-left: 20px;">Weather App</h1>
 </div>
 
-### Welcome to Weather App!
+### 🌦️ Welcome to Weather App! 🌦️
 
 #### Weather App for Android provides accurate weather forecasts, allowing you to plan your activities with confidence. Whether you need to know the current temperature, upcoming weather, or extended forecasts, this app has you covered.
 
@@ -13,10 +13,10 @@
 ---
 ## Content
 - [👨‍💻Project Overview](#Overview)
-- [Technologies used](#Technologies used)
+- [🚀Technologies used](#technologies_used)
+- [📱Screenshots](#screenshots)
 - [🌟Features](#features)
 - [🛠️Installation](#installation)
-- [📱Screenshots](#screenshots)
 - [⚙️Usage](#usage)
 - [🎯Conclusion](#conclusion)
 
@@ -66,8 +66,6 @@ ___
 </div>
 <hr>
 
-[Back to content](#content)
-
 ### 1. Current Weather:
 
 - View current weather conditions, including temperature, humidity, and wind speed.
@@ -107,33 +105,52 @@ ___
 
 - Efficient image loading for weather icons and visuals.
 - Smooth loading and caching of weather icons using Glide and Coil libraries.
+
+[Back to content](#content)
+
 ___
+
+<div id="installation" align="center">
+  <h2 >🛠️ Installation Steps</h2>
+</div>
+<hr>
+
+1. **Clone the Repository:**
+   ```shell
+       git clone https://github.com/Den-moroz/Weather.git
+       cd BookStore-api
+   ```
+2. **Open in Android Studio:**
+   Launch Android Studio.
+   Click on "Open an existing Android Studio project."
+   Navigate to the cloned repository and select the project.
+3. **Run the App:**
+   Choose an emulator or connect your Android device to the computer.
+   Click on the "Run" button in Android Studio to install and launch the app.
+
+**Note:**
+Ensure you have appropriate API keys for weather data services if required by the libraries used in the project.
+
 <div id="usage" align="center">
   <h2 >⚙️ Usage</h2>
 </div>
 <hr>
 
-[Back to content](#content)
-
-#### You can install and use this application directly on your Android device. Follow the steps below to get started:
-
-1. **Download the App:**
-    - Download the APK file of the Weather App from the provided link.
-    - Allow installation from unknown sources in your device's settings.
-    - Install the app on your Android device.
-
-2. **Launch the App:**
+1. **Launch the App:**
     - Open the Weather App on your Android device.
     - Grant location permissions for accurate weather updates.
     - Explore the intuitive user interface and various features.
 
-3. **View Current Weather:**
+2. **View Current Weather:**
     - Upon launch, the app displays the current weather conditions of your location.
     - Check temperature, humidity, wind speed, and weather icons for real-time weather updates.
 
-4. **Hourly and Extended Forecast:**
+3. **Hourly and Extended Forecast:**
     - Navigate to the hourly forecast section to view hourly weather predictions for the day.
     - Access the extended forecast to plan your week with detailed
+
+[Back to content](#content)
+---
 
 ### 🎯 Conclusion
 
