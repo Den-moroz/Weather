@@ -1,6 +1,6 @@
-<div style="display: flex; align-items: center; justify-content: center;">
-  <img src="logo.webp" width="400" alt="Icon"/>
-  <h1 style="margin-left: 20px;">Weather App</h1>
+<div style="display: flex; align-items: center;">
+  <img src="logo.webp" width="200" alt="Icon" style="vertical-align: middle;"/>
+  <h1 style="margin-left: 20px; vertical-align: middle;">Weather App</h1>
 </div>
 
 ### 🌦️ Welcome to Weather App! 🌦️
@@ -58,7 +58,7 @@ ___
 <div align="center">
   <img src="main_screen.png" alt="Screenshot 1" width="250"/>
   <img src="future_weather.png" alt="Screenshot 2" width="250"/>
-  <img src="screenshot3.png" alt="Screenshot 3" width="250"/>
+  <img src="saved_location.png" alt="Screenshot 3" width="250"/>
 </div>
 
 ---
@@ -120,7 +120,7 @@ ___
 1. **Clone the Repository:**
    ```shell
        git clone https://github.com/Den-moroz/Weather.git
-       cd BookStore-api
+       cd Weather
    ```
 2. **Open in Android Studio:**
    Launch Android Studio.
@@ -151,7 +151,9 @@ Ensure you have appropriate API keys for weather data services if required by th
     - Navigate to the hourly forecast section to view hourly weather predictions for the day.
     - Access the extended forecast to plan your week with detailed
 
+
 [Back to content](#content)
+
 ---
 
 ### 🎯 Conclusion
