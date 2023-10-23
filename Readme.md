@@ -1,6 +1,6 @@
-<div style="display: flex; align-items: center;">
+<div style="display: flex; align-items: center; justify-content: center;">
   <img src="logo.webp" width="200" alt="Icon" style="vertical-align: middle;"/>
-  <h1 style="margin-left: 20px; vertical-align: middle;">Weather App</h1>
+  <h1 style="margin-left: 20px;">Weather App</h1>
 </div>
 
 ### 🌦️ Welcome to Weather App! 🌦️
