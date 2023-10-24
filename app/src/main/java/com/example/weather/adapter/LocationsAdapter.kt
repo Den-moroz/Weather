@@ -11,11 +11,11 @@ import com.example.weather.R
 import com.example.weather.model.WeatherForLocationResponse
 import com.example.weather.service.LocationsViewModel
 import com.example.weather.service.WeatherViewModel
+import com.example.weather.ui.LocationsFragmentDirections
 
 class LocationsAdapter(
     private val items: List<WeatherForLocationResponse>,
-    private val viewModel: LocationsViewModel,
-    private val weatherViewModel: WeatherViewModel) : RecyclerView.Adapter<LocationsAdapter.ViewHolder>() {
+    private val viewModel: LocationsViewModel) : RecyclerView.Adapter<LocationsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val savedLocation: TextView = itemView.findViewById(R.id.saved_location)
@@ -52,8 +52,9 @@ class LocationsAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            weatherViewModel.updateLocation(item.timezone.split("/")[1])
-            holder.itemView.findNavController().navigate(R.id.action_locationsFragment_to_dailyWeatherFragment)
+            val action = LocationsFragmentDirections.actionLocationsFragmentToDailyWeatherFragment(selectedLocation = item.timezone.split("/")[1])
+            holder.itemView.findNavController().navigate(action)
+
         }
     }
 

@@ -8,6 +8,10 @@
         android:id="@+id/dailyWeatherFragment"
         android:name="com.example.weather.ui.DailyWeatherFragment"
         android:label="DailyWeatherFragment" >
+        <argument
+            android:name="selectedLocation"
+            app:argType="string"
+            android:defaultValue=""  />
         <action
             android:id="@+id/action_dailyWeatherFragment_to_weeklyWeatherFragment"
             app:destination="@id/weeklyWeatherFragment" />
@@ -30,6 +34,10 @@
         android:label="LocationsFragment" >
         <action
             android:id="@+id/action_locationsFragment_to_dailyWeatherFragment"
-            app:destination="@id/dailyWeatherFragment" />
+            app:destination="@id/dailyWeatherFragment">
+            <argument
+                android:name="selectedLocation"
+                app:argType="string"/>
+        </action>
     </fragment>
 </navigation>

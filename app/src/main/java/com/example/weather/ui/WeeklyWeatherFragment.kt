@@ -14,7 +14,8 @@ import com.bumptech.glide.Glide
 import com.example.weather.R
 import com.example.weather.adapter.FutureAdapter
 import com.example.weather.data.DataStoreManager
-import com.example.weather.databinding.FutureWeatherBinding
+import com.example.weather.databinding.FutureWeatherFragmentBinding
+import com.example.weather.model.WeatherIcon
 import com.example.weather.service.WeatherViewModel
 import com.example.weather.service.WeatherViewModelFactory
 
@@ -32,7 +33,7 @@ class WeeklyWeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FutureWeatherBinding.inflate(inflater, container, false)
+        val binding = FutureWeatherFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -40,17 +41,10 @@ class WeeklyWeatherFragment : Fragment() {
         viewModel.weeklyWeatherData.observe(viewLifecycleOwner, Observer { weatherResponse ->
             weatherResponse?.let {
                 binding.tomorrowCondition.text = it.days[1].conditions
-                val iconResource = when (it.days[1].icon) {
-                    "partly-cloudy-day" -> R.drawable.cloudy_sunny
-                    "clear-day" -> R.drawable.sunny
-                    "rain" -> R.drawable.rainy
-                    "snow" -> R.drawable.snowy
-                    "cloudy" -> R.drawable.cloudy
-                    "storm" -> R.drawable.storm
-                    else -> R.drawable.windy
-                }
+                val weatherIcon = WeatherIcon.getIconByCode(it.days[1].icon)
+
                 Glide.with(requireContext())
-                    .load(iconResource)
+                    .load(weatherIcon)
                     .into(binding.tomorrowImage)
                 binding.tomorrowTemp.text = getString(R.string.label_temperature, it.days[1].temp.toString())
                 binding.rainText.text = getString(R.string.label_rain, it.days[1].precipprob.toString())

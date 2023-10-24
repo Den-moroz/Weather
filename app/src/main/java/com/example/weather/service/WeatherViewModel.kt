@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.weather.data.DataStoreManager
-import com.example.weather.data.LocationDao
 import com.example.weather.model.WeatherResponse
 import com.example.weather.network.WeatherApi
 import kotlinx.coroutines.launch
@@ -42,7 +41,7 @@ class WeatherViewModel(private val dataStoreManager: DataStoreManager): ViewMode
 
     fun updateLocation(newLocation: String) {
         viewModelScope.launch {
-            dataStoreManager.saveLocation(newLocation)
+            _location.value = newLocation
         }
     }
 

@@ -21,13 +21,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weather.R
 import com.example.weather.adapter.HourlyAdapter
 import com.example.weather.data.DataStoreManager
-import com.example.weather.databinding.DailyWeatherBinding
+import com.example.weather.databinding.DailyWeatherFragmentBinding
+import com.example.weather.model.WeatherIcon
 import com.example.weather.service.LocationsViewModel
 import com.example.weather.service.LocationsViewModelFactory
 import com.example.weather.service.WeatherApplication
@@ -35,12 +37,14 @@ import com.example.weather.service.WeatherViewModel
 import com.example.weather.service.WeatherViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class DailyWeatherFragment : Fragment() {
+    private val args: DailyWeatherFragmentArgs by navArgs()
+    private val handler = Handler(Looper.getMainLooper())
+    private val delay: Long = 1000
 
     private val weatherViewModel: WeatherViewModel by activityViewModels {
         WeatherViewModelFactory(
@@ -54,52 +58,64 @@ class DailyWeatherFragment : Fragment() {
         )
     }
 
-    private lateinit var dataStoreManager: DataStoreManager
-
-    private lateinit var adapterHourly: RecyclerView.Adapter<HourlyAdapter.ViewHolder>
-    private lateinit var recyclerView: RecyclerView
-
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    private val locationPermissionRequest = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-        if (isGranted) {
-            getUserLocation()
-        } else {
-            Toast.makeText(requireContext(), R.string.toast_location_permission_required, Toast.LENGTH_SHORT).show()
+    private val locationPermissionRequest =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                getUserLocation()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.toast_location_permission_required,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
-    }
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val delay: Long = 1000
+    private lateinit var binding: DailyWeatherFragmentBinding
+    private lateinit var adapterHourly: HourlyAdapter
+    private lateinit var recyclerView: RecyclerView
     private lateinit var updateClock: Runnable
+    private lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val binding = DailyWeatherBinding.inflate(inflater, container, false)
+    ): View {
+        binding = DailyWeatherFragmentBinding.inflate(inflater, container, false)
+        val selectedLocation = args.selectedLocation
 
+        initializeViews()
+        setupObservers(selectedLocation)
+        requestLocationPermission()
+
+        return binding.root
+    }
+
+    private fun initializeViews() {
         binding.lifecycleOwner = this
         binding.viewModel = weatherViewModel
 
-        weatherViewModel.location.observe(viewLifecycleOwner, Observer {
-            weatherViewModel.getDailyWeather()
-        })
-
+        dataStoreManager = DataStoreManager(requireContext())
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
-        binding.changeLocation.setOnEditorActionListener { v, actionId, event ->
+        recyclerView = binding.recyclerWeatherEveryHour
+        recyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        adapterHourly = HourlyAdapter(emptyList())
+        recyclerView.adapter = adapterHourly
+
+        binding.changeLocation.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val imm =
                     context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                imm.hideSoftInputFromWindow(binding.changeLocation.windowToken, 0)
 
                 weatherViewModel.updateLocation(binding.changeLocation.text.toString())
 
                 binding.changeLocation.text = null
                 binding.changeLocation.isEnabled = false
                 binding.changeLocation.clearFocus()
-
                 binding.changeLocation.isEnabled = true
 
                 true
@@ -110,84 +126,75 @@ class DailyWeatherFragment : Fragment() {
 
         updateClock = object : Runnable {
             override fun run() {
-                val currentDateTime = LocalDateTime.now();
-                val formattedDate = currentDateTime.format(DateTimeFormatter.ofPattern("EEE MMM d"));
-                val formattedTime = currentDateTime.format(DateTimeFormatter.ofPattern("h:mm a"));
-                binding.date.setText(getString(R.string.label_datetime, formattedDate, formattedTime));
+                val currentDateTime = LocalDateTime.now()
+                val formattedDate = currentDateTime.format(DateTimeFormatter.ofPattern("EEE MMM d"))
+                val formattedTime = currentDateTime.format(DateTimeFormatter.ofPattern("h:mm a"))
+                binding.date.text = getString(R.string.label_datetime, formattedDate, formattedTime)
                 handler.postDelayed(this, delay)
             }
         }
 
         handler.postDelayed(updateClock, delay)
 
+        binding.nextDayTitle.setOnClickListener {
+            findNavController().navigate(R.id.action_dailyWeatherFragment_to_weeklyWeatherFragment)
+        }
+
+        binding.savedLocationImage.setOnClickListener {
+            findNavController().navigate(R.id.action_dailyWeatherFragment_to_locationsFragment)
+        }
+    }
+
+    private fun setupObservers(selectedLocation: String) {
+        weatherViewModel.location.observe(viewLifecycleOwner, Observer {
+            weatherViewModel.getDailyWeather()
+        })
+
         weatherViewModel.dailyWeatherData.observe(viewLifecycleOwner, Observer { weatherResponse ->
             weatherResponse?.let {
                 val refactoredTimezone = it.timezone.replace("/", " | ").replace("_", " ")
                 binding.location.text = refactoredTimezone
-                val iconResource = when (it.days[0].icon) {
-                    "partly-cloudy-day" -> R.drawable.cloudy_sunny
-                    "clear-day" -> R.drawable.sunny
-                    "rain" -> R.drawable.rainy
-                    "snow" -> R.drawable.snowy
-                    "cloudy" -> R.drawable.cloudy
-                    "storm" -> R.drawable.storm
-                    else -> R.drawable.windy
-                }
+                val weatherIcon = WeatherIcon.getIconByCode(it.days[0].icon)
+
                 Glide.with(requireContext())
-                    .load(iconResource)
+                    .load(weatherIcon)
                     .into(binding.currentWeatherImage)
-                binding.temperature.text = getString(R.string.label_temperature, it.days[0].temp.toString())
+                binding.temperature.text =
+                    getString(R.string.label_temperature, it.days[0].temp.toString())
                 binding.currentMaxAndMinTemperature.text = getString(
                     R.string.label_temp_max_and_min,
                     Math.round(it.days[0].tempmax).toString(),
                     Math.round(it.days[0].tempmin).toString()
                 )
-                binding.humidityText.text = getString(R.string.label_humidity, it.days[0].humidity.toString())
-                binding.rainText.text = getString(R.string.label_rain, it.days[0].precipprob.toString())
-                binding.windSpeedText.text = getString(R.string.label_wind_speed, it.days[0].windspeed.toString())
-
-                binding.nextDayTitle.setOnClickListener {
-                    findNavController().navigate(R.id.action_dailyWeatherFragment_to_weeklyWeatherFragment)
-                }
-
-                binding.savedLocationImage.setOnClickListener {
-                    findNavController().navigate(R.id.action_dailyWeatherFragment_to_locationsFragment)
-                }
+                binding.humidityText.text =
+                    getString(R.string.label_humidity, it.days[0].humidity.toString())
+                binding.rainText.text =
+                    getString(R.string.label_rain, it.days[0].precipprob.toString())
+                binding.windSpeedText.text =
+                    getString(R.string.label_wind_speed, it.days[0].windspeed.toString())
 
                 recyclerView = binding.recyclerWeatherEveryHour
-                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                recyclerView.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-                val hoursOfCurrentDay = it.days[0].hours.subList(LocalDateTime.now().hour, it.days[0].hours.size)
+                val hoursOfCurrentDay =
+                    it.days[0].hours.subList(LocalDateTime.now().hour, it.days[0].hours.size)
                 val hoursOfNextDay = it.days[1].hours
                 adapterHourly = HourlyAdapter((hoursOfCurrentDay + hoursOfNextDay).subList(0, 24))
                 recyclerView.adapter = adapterHourly
             }
         })
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        dataStoreManager = DataStoreManager(requireContext())
-
-        dataStoreManager.locationFlow.onEach { savedLocation ->
-            if (savedLocation.isNotBlank()) {
-                weatherViewModel.updateLocation(savedLocation)
-            } else {
-                requestLocationPermission()
-            }
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        handler.removeCallbacks(updateClock)
     }
 
     private fun requestLocationPermission() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
             locationPermissionRequest.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         } else {
@@ -203,6 +210,10 @@ class DailyWeatherFragment : Fragment() {
                     val userLocation = "${it.latitude},${it.longitude}"
                     weatherViewModel.updateLocation(userLocation)
 
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        dataStoreManager.saveLocation(userLocation)
+                    }
+
                     locationsViewModel.insertLocation(com.example.weather.data.Location(locationName = userLocation))
                     weatherViewModel.getDailyWeather()
                 }
@@ -210,5 +221,10 @@ class DailyWeatherFragment : Fragment() {
             .addOnFailureListener { e ->
                 Toast.makeText(requireContext(), R.string.toast_location_permission_required, Toast.LENGTH_SHORT).show()
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacks(updateClock)
     }
 }

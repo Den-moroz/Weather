@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weather.R
 import com.example.weather.model.WeatherHour
+import com.example.weather.model.WeatherIcon
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -37,17 +38,10 @@ class HourlyAdapter(private val items: List<WeatherHour>) : RecyclerView.Adapter
         holder.tempTxt.text = item.temp.toString()
 
         val context = holder.itemView.context
-        val drawableResourceId = when (item.icon) {
-            "partly-cloudy-day" -> R.drawable.cloudy_sunny
-            "clear-day" -> R.drawable.sunny
-            "rain" -> R.drawable.rainy
-            "snow" -> R.drawable.snowy
-            "cloudy" -> R.drawable.cloudy
-            "storm" -> R.drawable.storm
-            else -> R.drawable.windy
-        }
+        val weatherIcon = WeatherIcon.getIconByCode(item.icon)
+
         Glide.with(context)
-            .load(drawableResourceId)
+            .load(weatherIcon)
             .into(holder.imageView)
     }
 

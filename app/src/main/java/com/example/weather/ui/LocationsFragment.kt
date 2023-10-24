@@ -14,22 +14,13 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.adapter.LocationsAdapter
-import com.example.weather.data.DataStoreManager
 import com.example.weather.data.Location
-import com.example.weather.databinding.SavedLocationBinding
+import com.example.weather.databinding.SavedLocationFragmentBinding
 import com.example.weather.service.LocationsViewModel
 import com.example.weather.service.LocationsViewModelFactory
 import com.example.weather.service.WeatherApplication
-import com.example.weather.service.WeatherViewModel
-import com.example.weather.service.WeatherViewModelFactory
 
 class LocationsFragment() : Fragment() {
-
-    private val weatherViewModel: WeatherViewModel by activityViewModels {
-        WeatherViewModelFactory(
-            DataStoreManager(requireContext())
-        )
-    }
 
     private val locationsViewModel: LocationsViewModel by activityViewModels {
         LocationsViewModelFactory(
@@ -45,7 +36,7 @@ class LocationsFragment() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = SavedLocationBinding.inflate(inflater, container, false)
+        val binding = SavedLocationFragmentBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = this
         binding.viewModel = locationsViewModel
@@ -80,7 +71,7 @@ class LocationsFragment() : Fragment() {
                 locationsViewModel.weatherForLocation.observe(viewLifecycleOwner, Observer { weather ->
                     weather?.let {
                         adapterLocations = LocationsAdapter(
-                            locationsViewModel.weatherForLocation.value!!, locationsViewModel, weatherViewModel)
+                            locationsViewModel.weatherForLocation.value!!, locationsViewModel)
                         recyclerView.adapter = adapterLocations
                     }
                 })

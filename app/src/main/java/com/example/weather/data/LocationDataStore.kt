@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
 import androidx.datastore.preferences.core.stringPreferencesKey
+import kotlinx.coroutines.flow.first
 
 val Context.dataStore by preferencesDataStore(name = "settings")
 
@@ -18,8 +19,13 @@ class DataStoreManager(context: Context) {
         }
     }
 
+    suspend fun getLocation(): String {
+        val preferences = dataStore.data.first()
+        return preferences[LOCATION_KEY] ?: ""
+    }
+
     val locationFlow = dataStore.data.map { preferences ->
-        preferences[LOCATION_KEY] ?: "London"
+        preferences[LOCATION_KEY] ?: ""
     }
 
     companion object {

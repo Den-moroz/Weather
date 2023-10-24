@@ -37,9 +37,19 @@ class LocationsViewModel(private val locationDao: LocationDao): ViewModel() {
                 _status.value = WeatherApiStatus.LOADING
                 try {
                     val listOfWeather: MutableList<WeatherForLocationResponse> = mutableListOf()
-                    for (location in locations.value!!) {
-                        listOfWeather.add(weatherApi.getWeatherForCity(location.locationName))
+                    val locationsToProcess = locations.value!!.toMutableList()
+
+                    for (location in locationsToProcess) {
+                        try {
+                            val weatherResponse = weatherApi.getWeatherForCity(location.locationName)
+                            listOfWeather.add(weatherResponse)
+                        } catch (e: Exception) {
+                            locationDao.delete(location)
+                            Log.e(TAG, "Error processing location: ${location.locationName}")
+                            continue
+                        }
                     }
+
                     _weatherForLocation.value = listOfWeather
                     _status.value = WeatherApiStatus.DONE
                 } catch (e: Exception) {
