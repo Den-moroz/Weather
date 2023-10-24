@@ -61,7 +61,7 @@
                         <ImageView
                             android:id="@+id/tomorrow_image"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="150dp"
                             android:layout_margin="16dp"
                             android:layout_weight="0.5"
                             android:src="@drawable/cloudy" />
