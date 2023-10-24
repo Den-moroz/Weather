@@ -13,20 +13,27 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weather.R
 import com.example.weather.adapter.LocationsAdapter
 import com.example.weather.data.DataStoreManager
 import com.example.weather.data.Location
 import com.example.weather.databinding.SavedLocationBinding
+import com.example.weather.service.LocationsViewModel
+import com.example.weather.service.LocationsViewModelFactory
 import com.example.weather.service.WeatherApplication
 import com.example.weather.service.WeatherViewModel
 import com.example.weather.service.WeatherViewModelFactory
 
 class LocationsFragment() : Fragment() {
 
-    private val viewModel: WeatherViewModel by activityViewModels {
+    private val weatherViewModel: WeatherViewModel by activityViewModels {
         WeatherViewModelFactory(
-            (activity?.application as WeatherApplication).database.locationDao(), DataStoreManager(requireContext())
+            DataStoreManager(requireContext())
+        )
+    }
+
+    private val locationsViewModel: LocationsViewModel by activityViewModels {
+        LocationsViewModelFactory(
+            (activity?.application as WeatherApplication).database.locationDao()
         )
     }
 
@@ -41,7 +48,7 @@ class LocationsFragment() : Fragment() {
         val binding = SavedLocationBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        binding.viewModel = locationsViewModel
 
         binding.searchCities.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -49,7 +56,7 @@ class LocationsFragment() : Fragment() {
                     context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, 0)
 
-                viewModel.insertLocation(Location(locationName = binding.searchCities.text.toString()))
+                locationsViewModel.insertLocation(Location(locationName = binding.searchCities.text.toString()))
 
                 binding.searchCities.text = null
                 binding.searchCities.isEnabled = false
@@ -63,16 +70,17 @@ class LocationsFragment() : Fragment() {
             }
         }
 
-        viewModel.locations.observe(viewLifecycleOwner, Observer { locations ->
+        locationsViewModel.locations.observe(viewLifecycleOwner, Observer { locations ->
             locations?.let {
-                recyclerView = binding.root.findViewById(R.id.recycler_locations)
+                recyclerView = binding.recyclerLocations
                 recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-                viewModel.getWeatherForLocations()
+                locationsViewModel.getWeatherForLocations()
 
-                viewModel.weatherForLocation.observe(viewLifecycleOwner, Observer { weather ->
+                locationsViewModel.weatherForLocation.observe(viewLifecycleOwner, Observer { weather ->
                     weather?.let {
-                        adapterLocations = LocationsAdapter(viewModel.weatherForLocation.value!!, viewModel)
+                        adapterLocations = LocationsAdapter(
+                            locationsViewModel.weatherForLocation.value!!, locationsViewModel, weatherViewModel)
                         recyclerView.adapter = adapterLocations
                     }
                 })
@@ -91,7 +99,7 @@ class LocationsFragment() : Fragment() {
 
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                         val position = viewHolder.adapterPosition
-                        viewModel.deleteLocationAt(position)
+                        locationsViewModel.deleteLocationAt(position)
                     }
                 }
 

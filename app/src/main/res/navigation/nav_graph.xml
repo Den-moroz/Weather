@@ -13,7 +13,8 @@
             app:destination="@id/weeklyWeatherFragment" />
         <action
             android:id="@+id/action_dailyWeatherFragment_to_locationsFragment"
-            app:destination="@id/locationsFragment" />
+            app:destination="@id/locationsFragment">
+        </action>
     </fragment>
     <fragment
         android:id="@+id/weeklyWeatherFragment"

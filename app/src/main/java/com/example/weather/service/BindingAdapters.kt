@@ -6,10 +6,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.example.weather.R
-import com.example.weather.service.WeatherApiStatus
-
-class BindingAdapters {
-}
 
 @BindingAdapter("internetImageBinding")
 fun bindStatus(imageView: ImageView,

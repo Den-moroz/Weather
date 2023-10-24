@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.weather.service.WeatherViewModel" />
+            type="com.example.weather.service.LocationsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,7 +58,7 @@
                         android:drawableStart="@mipmap/search_foreground"
                         android:drawablePadding="0dp"
                         android:ems="13"
-                        android:hint="search..."
+                        android:hint="@string/add_location"
                         android:inputType="textPersonName"
                         android:paddingStart="0dp"
                         android:textColor="@color/white"

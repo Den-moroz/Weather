@@ -15,14 +15,13 @@ import com.example.weather.R
 import com.example.weather.adapter.FutureAdapter
 import com.example.weather.data.DataStoreManager
 import com.example.weather.databinding.FutureWeatherBinding
-import com.example.weather.service.WeatherApplication
 import com.example.weather.service.WeatherViewModel
 import com.example.weather.service.WeatherViewModelFactory
 
 class WeeklyWeatherFragment : Fragment() {
     private val viewModel: WeatherViewModel by activityViewModels {
         WeatherViewModelFactory(
-            (activity?.application as WeatherApplication).database.locationDao(), DataStoreManager(requireContext())
+            DataStoreManager(requireContext())
         )
     }
 
@@ -62,7 +61,7 @@ class WeeklyWeatherFragment : Fragment() {
                     findNavController().navigate(R.id.action_weeklyWeatherFragment_to_dailyWeatherFragment)
                 }
 
-                recyclerView = binding.root.findViewById(R.id.recycler_weather_every_day)
+                recyclerView = binding.recyclerWeatherEveryDay
                 recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
                 val hourlyDataFromCurrentHour = it.days.subList(2, it.days.size)

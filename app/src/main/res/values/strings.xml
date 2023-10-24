@@ -12,9 +12,9 @@
     <string name="humidity">Humidity</string>
     <string name="wind_speed">Wind speed</string>
     <string name="rain">Rain</string>
-    <string name="search_hint"></string>
     <string name="change_city">change city</string>
     <string name="toast_location_permission_required">Location permission is required to use the weather app.</string>
     <string name="forecast_not_available">Forecast not available</string>
     <string name="internet_text">There is no Internet connection for the Weatherprogram. To see the forecast, check your connection and try again.</string>
+    <string name="add_location">add location</string>
 </resources>

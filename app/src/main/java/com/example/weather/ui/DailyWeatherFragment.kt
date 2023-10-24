@@ -28,6 +28,8 @@ import com.example.weather.R
 import com.example.weather.adapter.HourlyAdapter
 import com.example.weather.data.DataStoreManager
 import com.example.weather.databinding.DailyWeatherBinding
+import com.example.weather.service.LocationsViewModel
+import com.example.weather.service.LocationsViewModelFactory
 import com.example.weather.service.WeatherApplication
 import com.example.weather.service.WeatherViewModel
 import com.example.weather.service.WeatherViewModelFactory
@@ -35,16 +37,20 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class DailyWeatherFragment : Fragment() {
 
-    private val viewModel: WeatherViewModel by activityViewModels {
+    private val weatherViewModel: WeatherViewModel by activityViewModels {
         WeatherViewModelFactory(
-            (activity?.application as WeatherApplication).database.locationDao(), DataStoreManager(requireContext())
+            DataStoreManager(requireContext())
+        )
+    }
+
+    private val locationsViewModel: LocationsViewModel by activityViewModels {
+        LocationsViewModelFactory(
+            (activity?.application as WeatherApplication).database.locationDao()
         )
     }
 
@@ -74,10 +80,10 @@ class DailyWeatherFragment : Fragment() {
         val binding = DailyWeatherBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        binding.viewModel = weatherViewModel
 
-        viewModel.location.observe(viewLifecycleOwner, Observer {
-            viewModel.getDailyWeather()
+        weatherViewModel.location.observe(viewLifecycleOwner, Observer {
+            weatherViewModel.getDailyWeather()
         })
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
@@ -88,7 +94,7 @@ class DailyWeatherFragment : Fragment() {
                     context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, 0)
 
-                viewModel.updateLocation(binding.changeLocation.text.toString())
+                weatherViewModel.updateLocation(binding.changeLocation.text.toString())
 
                 binding.changeLocation.text = null
                 binding.changeLocation.isEnabled = false
@@ -114,7 +120,7 @@ class DailyWeatherFragment : Fragment() {
 
         handler.postDelayed(updateClock, delay)
 
-        viewModel.dailyWeatherData.observe(viewLifecycleOwner, Observer { weatherResponse ->
+        weatherViewModel.dailyWeatherData.observe(viewLifecycleOwner, Observer { weatherResponse ->
             weatherResponse?.let {
                 val refactoredTimezone = it.timezone.replace("/", " | ").replace("_", " ")
                 binding.location.text = refactoredTimezone
@@ -148,7 +154,7 @@ class DailyWeatherFragment : Fragment() {
                     findNavController().navigate(R.id.action_dailyWeatherFragment_to_locationsFragment)
                 }
 
-                recyclerView = binding.root.findViewById(R.id.recycler_weather_every_hour)
+                recyclerView = binding.recyclerWeatherEveryHour
                 recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
                 val hoursOfCurrentDay = it.days[0].hours.subList(LocalDateTime.now().hour, it.days[0].hours.size)
@@ -167,7 +173,7 @@ class DailyWeatherFragment : Fragment() {
 
         dataStoreManager.locationFlow.onEach { savedLocation ->
             if (savedLocation.isNotBlank()) {
-                viewModel.updateLocation(savedLocation)
+                weatherViewModel.updateLocation(savedLocation)
             } else {
                 requestLocationPermission()
             }
@@ -195,10 +201,10 @@ class DailyWeatherFragment : Fragment() {
             .addOnSuccessListener { location: Location? ->
                 location?.let {
                     val userLocation = "${it.latitude},${it.longitude}"
-                    viewModel.updateLocation(userLocation)
+                    weatherViewModel.updateLocation(userLocation)
 
-                    viewModel.insertLocation(com.example.weather.data.Location(locationName = userLocation))
-                    viewModel.getDailyWeather()
+                    locationsViewModel.insertLocation(com.example.weather.data.Location(locationName = userLocation))
+                    weatherViewModel.getDailyWeather()
                 }
             }
             .addOnFailureListener { e ->
