@@ -32,12 +32,14 @@ fun bindStatusForController(constraintLayout: ConstraintLayout, status: WeatherA
             constraintLayout.findViewById<TextView>(R.id.internet_problem_text).visibility = View.GONE
             constraintLayout.findViewById<TextView>(R.id.internet_problem_title).visibility = View.GONE
             constraintLayout.findViewById<ImageView>(R.id.status_image).visibility = View.GONE
+            constraintLayout.findViewById<ImageView>(R.id.back_button_to_saved_location).visibility = View.GONE
         }
         WeatherApiStatus.ERROR -> {
             constraintLayout.findViewById<ConstraintLayout>(R.id.constraint_main).visibility = View.GONE
             constraintLayout.findViewById<TextView>(R.id.internet_problem_text).visibility = View.VISIBLE
             constraintLayout.findViewById<TextView>(R.id.internet_problem_title).visibility = View.VISIBLE
             constraintLayout.findViewById<ImageView>(R.id.status_image).visibility = View.VISIBLE
+            constraintLayout.findViewById<ImageView>(R.id.back_button_to_saved_location).visibility = View.VISIBLE
         }
         else -> {
             constraintLayout.visibility = View.VISIBLE

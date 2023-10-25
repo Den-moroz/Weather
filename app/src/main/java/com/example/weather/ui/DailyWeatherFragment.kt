@@ -150,6 +150,10 @@ class DailyWeatherFragment : Fragment() {
         binding.savedLocationImage.setOnClickListener {
             findNavController().navigate(R.id.action_dailyWeatherFragment_to_locationsFragment)
         }
+
+        binding.backButtonToSavedLocation.setOnClickListener {
+            findNavController().navigate(R.id.action_dailyWeatherFragment_to_locationsFragment)
+        }
     }
 
     private fun setupObservers() {

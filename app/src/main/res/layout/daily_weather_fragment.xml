@@ -17,6 +17,15 @@ xmlns:tools="http://schemas.android.com/tools">
     app:constraintBinding="@{viewModel.status}" >
 
     <ImageView
+        android:id="@+id/back_button_to_saved_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp"/>
+
+    <ImageView
         android:id="@+id/status_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
