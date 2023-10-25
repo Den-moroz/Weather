@@ -237,6 +237,7 @@ class DailyWeatherFragment : Fragment() {
 
                         locationsViewModel.insertLocation(
                             com.example.weather.data.Location(
+                                1,
                                 locationName = userLocation
                             )
                         )
