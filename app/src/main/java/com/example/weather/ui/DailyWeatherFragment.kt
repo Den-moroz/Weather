@@ -32,6 +32,7 @@ import com.example.weather.databinding.DailyWeatherFragmentBinding
 import com.example.weather.service.WeatherIcon
 import com.example.weather.service.LocationsViewModel
 import com.example.weather.service.LocationsViewModelFactory
+import com.example.weather.service.WeatherApiStatus
 import com.example.weather.service.WeatherApplication
 import com.example.weather.service.WeatherViewModel
 import com.example.weather.service.WeatherViewModelFactory
@@ -83,6 +84,7 @@ class DailyWeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        weatherViewModel.updateStatus(WeatherApiStatus.LOADING)
         binding = DailyWeatherFragmentBinding.inflate(inflater, container, false)
         val selectedLocation = args.selectedLocation
 

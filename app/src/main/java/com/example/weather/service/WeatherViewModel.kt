@@ -38,6 +38,10 @@ class WeatherViewModel(private val dataStoreManager: DataStoreManager): ViewMode
         }
     }
 
+    fun updateStatus(status: WeatherApiStatus) {
+        _status.value = status
+    }
+
     fun getDailyWeather() {
         val locationValue = location.value
         if (locationValue != null) {
