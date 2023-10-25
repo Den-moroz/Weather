@@ -1,7 +1,7 @@
-package com.example.weather.service
+package com.example.weather.domain.usecases
 
 import com.example.weather.R
-import com.example.weather.model.WeatherIconCode
+import com.example.weather.domain.model.WeatherIconCode
 
 enum class WeatherIcon(val iconCode: String, val iconResourceId: Int) {
     PARTLY_CLOUDY_DAY(WeatherIconCode.PARTLY_CLOUDY_DAY.code, R.drawable.cloudy_sunny),

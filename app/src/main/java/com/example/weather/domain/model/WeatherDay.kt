@@ -1,4 +1,4 @@
-package com.example.weather.model
+package com.example.weather.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -25,7 +25,7 @@ data class WeatherDay(
         parcel.readString()!!,
         parcel.readString()!!,
         mutableListOf<WeatherHour>().apply {
-            parcel.readTypedList(this, WeatherHour.CREATOR)
+            parcel.readTypedList(this, WeatherHour)
         },
         parcel.readDouble()
     )

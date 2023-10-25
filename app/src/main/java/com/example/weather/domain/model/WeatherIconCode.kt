@@ -1,4 +1,4 @@
-package com.example.weather.model
+package com.example.weather.domain.model
 
 enum class WeatherIconCode(val code: String) {
     PARTLY_CLOUDY_DAY("partly-cloudy-day"),

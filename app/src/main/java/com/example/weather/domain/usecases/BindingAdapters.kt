@@ -1,4 +1,4 @@
-package com.example.weather.service
+package com.example.weather.domain.usecases
 
 import android.view.View
 import android.widget.ImageView
@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.example.weather.R
+import com.example.weather.presentation.viewmodel.WeatherApiStatus
 
 @BindingAdapter("internetImageBinding")
 fun bindStatus(imageView: ImageView,

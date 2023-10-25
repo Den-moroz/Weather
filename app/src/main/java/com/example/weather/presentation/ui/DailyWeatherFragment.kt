@@ -1,4 +1,4 @@
-package com.example.weather.ui
+package com.example.weather.presentation.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -26,16 +26,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weather.R
-import com.example.weather.adapter.HourlyAdapter
-import com.example.weather.data.DataStoreManager
+import com.example.weather.WeatherApplication
+import com.example.weather.presentation.adapter.HourlyAdapter
+import com.example.weather.data.db.DataStoreManager
 import com.example.weather.databinding.DailyWeatherFragmentBinding
-import com.example.weather.service.WeatherIcon
-import com.example.weather.service.LocationsViewModel
-import com.example.weather.service.LocationsViewModelFactory
-import com.example.weather.service.WeatherApiStatus
-import com.example.weather.service.WeatherApplication
-import com.example.weather.service.WeatherViewModel
-import com.example.weather.service.WeatherViewModelFactory
+import com.example.weather.domain.usecases.WeatherIcon
+import com.example.weather.presentation.viewmodel.LocationsViewModel
+import com.example.weather.presentation.viewmodel.LocationsViewModelFactory
+import com.example.weather.presentation.viewmodel.WeatherApiStatus
+import com.example.weather.presentation.viewmodel.WeatherViewModel
+import com.example.weather.presentation.viewmodel.WeatherViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
@@ -236,7 +236,7 @@ class DailyWeatherFragment : Fragment() {
                         }
 
                         locationsViewModel.insertLocation(
-                            com.example.weather.data.Location(
+                            com.example.weather.data.entity.Location(
                                 1,
                                 locationName = userLocation
                             )

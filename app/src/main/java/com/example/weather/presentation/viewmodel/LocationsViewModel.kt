@@ -1,4 +1,4 @@
-package com.example.weather.service
+package com.example.weather.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.weather.data.Location
-import com.example.weather.data.LocationDao
-import com.example.weather.model.WeatherForLocationResponse
-import com.example.weather.network.WeatherApi
+import com.example.weather.data.entity.Location
+import com.example.weather.data.repository.LocationDao
+import com.example.weather.domain.model.WeatherForLocationResponse
+import com.example.weather.data.api.WeatherApi
 import kotlinx.coroutines.launch
 
 class LocationsViewModel(private val locationDao: LocationDao): ViewModel() {

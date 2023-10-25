@@ -1,4 +1,4 @@
-package com.example.weather.adapter
+package com.example.weather.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weather.R
-import com.example.weather.model.WeatherHour
-import com.example.weather.service.WeatherIcon
+import com.example.weather.domain.model.WeatherHour
+import com.example.weather.domain.usecases.WeatherIcon
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -21,12 +21,12 @@ class HourlyAdapter(private val items: List<WeatherHour>) : RecyclerView.Adapter
         val imageView: ImageView = itemView.findViewById(R.id.hour_image)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HourlyAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_hourly, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: HourlyAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         val inputFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
         val outputFormatter = DateTimeFormatter.ofPattern("h a")

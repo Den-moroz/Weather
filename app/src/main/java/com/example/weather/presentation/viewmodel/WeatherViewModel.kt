@@ -1,4 +1,4 @@
-package com.example.weather.service
+package com.example.weather.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.weather.data.DataStoreManager
-import com.example.weather.model.WeatherResponse
-import com.example.weather.network.WeatherApi
+import com.example.weather.data.db.DataStoreManager
+import com.example.weather.domain.model.WeatherResponse
+import com.example.weather.data.api.WeatherApi
 import kotlinx.coroutines.launch
 
 const val TAG = "ViewModel";

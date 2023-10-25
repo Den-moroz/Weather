@@ -1,10 +1,9 @@
-package com.example.weather.ui
+package com.example.weather.presentation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.bumptech.glide.Glide
 import com.example.weather.R
 
 class MainActivity : AppCompatActivity() {

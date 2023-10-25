@@ -1,4 +1,4 @@
-package com.example.weather.model
+package com.example.weather.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -9,7 +9,7 @@ data class WeatherResponse(
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
-        parcel.createTypedArrayList(WeatherDay.CREATOR)!!)
+        parcel.createTypedArrayList(WeatherDay)!!)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(timezone)

@@ -1,10 +1,11 @@
-package com.example.weather.data
+package com.example.weather.data.repository
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.weather.data.entity.Location
 import kotlinx.coroutines.flow.Flow
 
 @Dao

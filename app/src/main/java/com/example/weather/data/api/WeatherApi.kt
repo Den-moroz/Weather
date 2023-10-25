@@ -1,7 +1,7 @@
-package com.example.weather.network
+package com.example.weather.data.api
 
-import com.example.weather.model.WeatherForLocationResponse
-import com.example.weather.model.WeatherResponse
+import com.example.weather.domain.model.WeatherForLocationResponse
+import com.example.weather.domain.model.WeatherResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

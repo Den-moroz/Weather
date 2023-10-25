@@ -6,14 +6,14 @@ xmlns:tools="http://schemas.android.com/tools">
 <data>
     <variable
         name="viewModel"
-        type="com.example.weather.service.WeatherViewModel" />
+        type="com.example.weather.presentation.viewmodel.WeatherViewModel" />
 </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".ui.MainActivity"
+    tools:context=".presentation.ui.MainActivity"
     app:constraintBinding="@{viewModel.status}" >
 
     <ImageView
@@ -73,7 +73,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background"
-        tools:context=".ui.MainActivity" >
+        tools:context=".presentation.ui.MainActivity" >
 
         <ScrollView
             android:layout_width="match_parent"
@@ -121,7 +121,7 @@ xmlns:tools="http://schemas.android.com/tools">
                         android:layout_height="50dp"
                         app:srcCompat="@drawable/saved_location"
                         android:layout_marginRight="35dp"
-                        android:layout_marginTop="9dp"
+                        android:layout_marginTop="7dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>

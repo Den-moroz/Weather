@@ -1,4 +1,4 @@
-package com.example.weather.ui
+package com.example.weather.presentation.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weather.R
-import com.example.weather.adapter.FutureAdapter
-import com.example.weather.data.DataStoreManager
+import com.example.weather.presentation.adapter.FutureAdapter
+import com.example.weather.data.db.DataStoreManager
 import com.example.weather.databinding.FutureWeatherFragmentBinding
-import com.example.weather.service.WeatherIcon
-import com.example.weather.service.WeatherViewModel
-import com.example.weather.service.WeatherViewModelFactory
+import com.example.weather.domain.usecases.WeatherIcon
+import com.example.weather.presentation.viewmodel.WeatherViewModel
+import com.example.weather.presentation.viewmodel.WeatherViewModelFactory
 
 class WeeklyWeatherFragment : Fragment() {
     private val viewModel: WeatherViewModel by activityViewModels {

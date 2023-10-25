@@ -1,4 +1,4 @@
-package com.example.weather.adapter
+package com.example.weather.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -8,14 +8,14 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
-import com.example.weather.model.WeatherForLocationResponse
-import com.example.weather.service.LocationsViewModel
-import com.example.weather.service.WeatherViewModel
-import com.example.weather.ui.LocationsFragmentDirections
+import com.example.weather.domain.model.WeatherForLocationResponse
+import com.example.weather.presentation.ui.LocationsFragmentDirections
+import com.example.weather.presentation.viewmodel.LocationsViewModel
 
 class LocationsAdapter(
     private val items: List<WeatherForLocationResponse>,
-    private val viewModel: LocationsViewModel) : RecyclerView.Adapter<LocationsAdapter.ViewHolder>() {
+    private val viewModel: LocationsViewModel
+) : RecyclerView.Adapter<LocationsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val savedLocation: TextView = itemView.findViewById(R.id.saved_location)
@@ -24,7 +24,7 @@ class LocationsAdapter(
         val currentWeatherTempMaxAndMin: TextView = itemView.findViewById(R.id.current_weather_temp_max_and_min)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationsAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_location, parent, false)
         return ViewHolder(view)
     }
@@ -54,7 +54,6 @@ class LocationsAdapter(
         holder.itemView.setOnClickListener {
             val action = LocationsFragmentDirections.actionLocationsFragmentToDailyWeatherFragment(selectedLocation = item.timezone.split("/")[1])
             holder.itemView.findNavController().navigate(action)
-
         }
     }
 

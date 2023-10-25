@@ -1,4 +1,4 @@
-package com.example.weather.ui
+package com.example.weather.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -13,12 +13,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weather.adapter.LocationsAdapter
-import com.example.weather.data.Location
+import com.example.weather.WeatherApplication
+import com.example.weather.presentation.adapter.LocationsAdapter
+import com.example.weather.data.entity.Location
 import com.example.weather.databinding.SavedLocationFragmentBinding
-import com.example.weather.service.LocationsViewModel
-import com.example.weather.service.LocationsViewModelFactory
-import com.example.weather.service.WeatherApplication
+import com.example.weather.presentation.viewmodel.LocationsViewModel
+import com.example.weather.presentation.viewmodel.LocationsViewModelFactory
 
 class LocationsFragment() : Fragment() {
 
