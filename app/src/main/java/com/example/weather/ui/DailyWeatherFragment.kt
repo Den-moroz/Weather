@@ -29,7 +29,7 @@ import com.example.weather.R
 import com.example.weather.adapter.HourlyAdapter
 import com.example.weather.data.DataStoreManager
 import com.example.weather.databinding.DailyWeatherFragmentBinding
-import com.example.weather.model.WeatherIcon
+import com.example.weather.service.WeatherIcon
 import com.example.weather.service.LocationsViewModel
 import com.example.weather.service.LocationsViewModelFactory
 import com.example.weather.service.WeatherApplication
@@ -38,6 +38,7 @@ import com.example.weather.service.WeatherViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -86,8 +87,14 @@ class DailyWeatherFragment : Fragment() {
         val selectedLocation = args.selectedLocation
 
         initializeViews()
-        setupObservers(selectedLocation)
-        requestLocationPermission()
+
+        if (selectedLocation.isNotBlank()) {
+            weatherViewModel.updateLocation(selectedLocation)
+        } else {
+            requestLocationPermission()
+        }
+
+        setupObservers()
 
         return binding.root
     }
@@ -145,7 +152,7 @@ class DailyWeatherFragment : Fragment() {
         }
     }
 
-    private fun setupObservers(selectedLocation: String) {
+    private fun setupObservers() {
         weatherViewModel.location.observe(viewLifecycleOwner, Observer {
             weatherViewModel.getDailyWeather()
         })
@@ -157,7 +164,7 @@ class DailyWeatherFragment : Fragment() {
                 val weatherIcon = WeatherIcon.getIconByCode(it.days[0].icon)
 
                 Glide.with(requireContext())
-                    .load(weatherIcon)
+                    .load(weatherIcon.iconResourceId)
                     .into(binding.currentWeatherImage)
                 binding.temperature.text =
                     getString(R.string.label_temperature, it.days[0].temp.toString())
@@ -204,23 +211,40 @@ class DailyWeatherFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun getUserLocation() {
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                location?.let {
-                    val userLocation = "${it.latitude},${it.longitude}"
-                    weatherViewModel.updateLocation(userLocation)
+        val storedLocation = runBlocking {
+            dataStoreManager.getLocation()
+        }
 
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        dataStoreManager.saveLocation(userLocation)
+        if (storedLocation.isNotBlank()) {
+            weatherViewModel.updateLocation(storedLocation)
+            weatherViewModel.getDailyWeather()
+        } else {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    location?.let {
+                        val userLocation = "${it.latitude},${it.longitude}"
+                        weatherViewModel.updateLocation(userLocation)
+
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            dataStoreManager.saveLocation(userLocation)
+                        }
+
+                        locationsViewModel.insertLocation(
+                            com.example.weather.data.Location(
+                                locationName = userLocation
+                            )
+                        )
+                        weatherViewModel.getDailyWeather()
                     }
-
-                    locationsViewModel.insertLocation(com.example.weather.data.Location(locationName = userLocation))
-                    weatherViewModel.getDailyWeather()
                 }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), R.string.toast_location_permission_required, Toast.LENGTH_SHORT).show()
-            }
+                .addOnFailureListener { e ->
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.toast_location_permission_required,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+        }
     }
 
     override fun onDestroyView() {

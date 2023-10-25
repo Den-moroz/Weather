@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weather.R
 import com.example.weather.model.WeatherDay
-import com.example.weather.model.WeatherIcon
+import com.example.weather.service.WeatherIcon
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -47,7 +47,7 @@ class FutureAdapter(private val items: List<WeatherDay>) : RecyclerView.Adapter<
         val weatherIcon = WeatherIcon.getIconByCode(item.icon)
 
         Glide.with(context)
-            .load(weatherIcon)
+            .load(weatherIcon.iconResourceId)
             .into(holder.imageView)
     }
 

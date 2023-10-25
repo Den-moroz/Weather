@@ -31,17 +31,10 @@ class WeatherViewModel(private val dataStoreManager: DataStoreManager): ViewMode
 
     private val weatherApi = WeatherApi.create()
 
-    init {
-        viewModelScope.launch {
-            dataStoreManager.locationFlow.collect { location ->
-                _location.value = location
-            }
-        }
-    }
-
     fun updateLocation(newLocation: String) {
         viewModelScope.launch {
             _location.value = newLocation
+            dataStoreManager.saveLocation(newLocation)
         }
     }
 

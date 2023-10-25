@@ -15,7 +15,7 @@ import com.example.weather.R
 import com.example.weather.adapter.FutureAdapter
 import com.example.weather.data.DataStoreManager
 import com.example.weather.databinding.FutureWeatherFragmentBinding
-import com.example.weather.model.WeatherIcon
+import com.example.weather.service.WeatherIcon
 import com.example.weather.service.WeatherViewModel
 import com.example.weather.service.WeatherViewModelFactory
 
@@ -44,7 +44,7 @@ class WeeklyWeatherFragment : Fragment() {
                 val weatherIcon = WeatherIcon.getIconByCode(it.days[1].icon)
 
                 Glide.with(requireContext())
-                    .load(weatherIcon)
+                    .load(weatherIcon.iconResourceId)
                     .into(binding.tomorrowImage)
                 binding.tomorrowTemp.text = getString(R.string.label_temperature, it.days[1].temp.toString())
                 binding.rainText.text = getString(R.string.label_rain, it.days[1].precipprob.toString())

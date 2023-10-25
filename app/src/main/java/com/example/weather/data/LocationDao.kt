@@ -18,4 +18,7 @@ interface LocationDao {
 
     @Query("SELECT * FROM location ORDER BY location_name")
     fun getAll(): Flow<List<Location>>
+
+    @Query("SELECT * FROM location WHERE location_name = :locationName")
+    fun get(locationName: String): Flow<Location>
 }

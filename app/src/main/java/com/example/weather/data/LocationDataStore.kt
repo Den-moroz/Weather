@@ -3,7 +3,6 @@ package com.example.weather.data
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.flow.map
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
 
@@ -22,10 +21,6 @@ class DataStoreManager(context: Context) {
     suspend fun getLocation(): String {
         val preferences = dataStore.data.first()
         return preferences[LOCATION_KEY] ?: ""
-    }
-
-    val locationFlow = dataStore.data.map { preferences ->
-        preferences[LOCATION_KEY] ?: ""
     }
 
     companion object {
