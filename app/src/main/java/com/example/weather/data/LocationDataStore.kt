@@ -23,6 +23,12 @@ class DataStoreManager(context: Context) {
         return preferences[LOCATION_KEY] ?: ""
     }
 
+    suspend fun removeLocation() {
+        dataStore.edit { preferences ->
+            preferences.remove(LOCATION_KEY)
+        }
+    }
+
     companion object {
         private val LOCATION_KEY = stringPreferencesKey("location_key")
     }

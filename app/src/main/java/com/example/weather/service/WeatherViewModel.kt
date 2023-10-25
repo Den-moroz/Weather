@@ -56,16 +56,17 @@ class WeatherViewModel(private val dataStoreManager: DataStoreManager): ViewMode
                         TAG,
                         "Something went wrong when trying to execute network request for daily weather"
                     )
+                    removeLocationFromDataStore()
                 }
             }
         }
     }
 
     fun getWeeklyWeatherData() {
+        val locationValue = location.value ?: ""
         viewModelScope.launch {
             _status.value = WeatherApiStatus.LOADING
             try {
-                val locationValue = location.value ?: "London"
                 _weeklyWeatherData.value = weatherApi.getWeeklyWeather(locationValue)
                 _status.value = WeatherApiStatus.DONE
             } catch (e: Exception) {
@@ -74,7 +75,14 @@ class WeatherViewModel(private val dataStoreManager: DataStoreManager): ViewMode
                     TAG,
                     "Something went wrong when trying to execute network request for weekly weather"
                 )
+                removeLocationFromDataStore()
             }
+        }
+    }
+
+    private fun removeLocationFromDataStore() {
+        viewModelScope.launch {
+            dataStoreManager.removeLocation()
         }
     }
 }
