@@ -2,7 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
     kotlin("kapt")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -21,7 +23,18 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
+
+    secrets {
+        propertiesFileName = "secrets.properties"
+
+        defaultPropertiesFileName = "local.defaults.properties"
+
+        ignoreList.add("keyToIgnore")
+        ignoreList.add("sdk.*")
+    }
+
 
     buildTypes {
         release {
@@ -59,6 +72,8 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.firebase:firebase-messaging:23.3.1")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation("androidx.room:room-runtime:2.6.0")
@@ -71,6 +86,9 @@ dependencies {
     implementation("androidx.viewpager:viewpager:1.1.0-alpha01")
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:32.4.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
