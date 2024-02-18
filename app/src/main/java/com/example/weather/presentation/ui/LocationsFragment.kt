@@ -10,9 +10,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weather.R
 import com.example.weather.WeatherApplication
 import com.example.weather.presentation.adapter.LocationsAdapter
 import com.example.weather.data.entity.Location
@@ -59,6 +61,10 @@ class LocationsFragment() : Fragment() {
             } else {
                 false
             }
+        }
+
+        binding.mapWithWeather.setOnClickListener {
+            findNavController().navigate(R.id.action_locationsFragment_to_mapsActivity)
         }
 
         locationsViewModel.locations.observe(viewLifecycleOwner, Observer { locations ->

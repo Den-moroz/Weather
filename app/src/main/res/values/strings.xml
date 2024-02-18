@@ -17,4 +17,5 @@
     <string name="forecast_not_available">Forecast not available</string>
     <string name="internet_text">Couldn\'t fetch weather data. Please check your internet connection and try again. Make sure the city exists and try entering the city name again.</string>
     <string name="add_location">add location</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
